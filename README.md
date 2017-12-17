@@ -139,6 +139,8 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
+The code for this is on the notebook ./Advanced-Lane-Finding-Project.ipynb in the section "Finding Lane Line".
+
 The algorithm for the lane line detection goes as follows:
 
 1. It detects the columns of the image that has more data to find the centroids where the left and right lane are.
@@ -146,14 +148,15 @@ The algorithm for the lane line detection goes as follows:
 3. Once all the points are detected is used and algorithm that can use those points to construct a mathematical function that fit all those points.
 4. Using that function now is time to draw on the image the detected points on each line and draw the polynomial function that fit those points.
 
-![image7]
+![image13]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+The code for this is on the notebook ./Advanced-Lane-Finding-Project.ipynb in the section "Radius of Curvature and Distance from Lane Center Calculation".
 
-[image10]
+To calculate the curvature and position of the vehicle was necesary to create a relation between pixels and metters
 
+![image10]
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
@@ -167,11 +170,11 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Project Video ![video1] (.output_videos/project_video.mp4)
+Project Video ![video1] (.output_videos/project_video.mp4): The projec video works good, the transition between frames is smooth and only has some problems and the end.
 
-Challenge Video ![video2] (.output_videos/challenge_video.mp4)
+Challenge Video ![video2] (.output_videos/challenge_video.mp4): The challenge video has some ligth difficulties (the white lanes where hard to detect, and there were some shadows). The result video in general behaves almost as good as the project video.
 
-Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4)
+Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4): The harder challenge video had harder ligth conditions and has lots of curves. The result video is not to bad, it manage to detect most of the curves and almost in all the video can detect correctly the lane line.
 
 ---
 
@@ -179,4 +182,8 @@ Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
+The project was long with lots of components and functions, but the most critic one was the generation of the binnary image using the sobel and color space transformation. I had to play with different combinations of parameters to finally get one that could behave "good" in the three videos.
+
+I probaly could tried to tune thoose parameters only for the project video and make it work perfectly, but i wanted to, proccess also the challenge and the harder challenge video. 
+
+
