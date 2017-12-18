@@ -236,7 +236,8 @@ Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4): Th
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-The project was long with lots of components and functions, but the most critic one was the generation of the binary image using the sobel and color space transformation. I had to play with different combinations of parameters to finally get one that could behave "good" in the three videos.
-I probably could have tried to tune those parameters only for the project video and make it work perfectly, but I wanted to, process also the challenge and the harder challenge video. 
+The project was long with lots of components and functions, but the most critic one was the generation of the binary image using the sobel and color space transformation. I had to play with different combinations of parameters to finally get one that could behave "good" in the three videos.</br>
+
+I probably could have tried to tune those parameters only for the project video and make it work perfectly, but I wanted to, process also the challenge and the harder challenge video. </br>
 In general, the behavior of the three videos is good, maybe is necessary to use different pipeline processing functions to different light conditions to make sure that the video is able to process well in all conditions. I tried to create a general purpose pipeline but maybe is not the best approach. 
  
