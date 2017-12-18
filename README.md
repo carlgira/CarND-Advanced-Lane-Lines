@@ -36,7 +36,7 @@ The goals / steps of this project are the following:
 Important Files in the project:
 
 - **README (writeup):** Writeup with all the notes and results of the project
-- **Advanced-Lane-Finding-Project.ipynb:** Notebook with all the code explaining each step of the image lane detection.
+- **Advanced-Lane-Finding-Project.ipynb:** Notebook with all the code for explaining each step of the image lane detection.
 - **output_videos:** Folder with the output of the three videos.
 
 
@@ -62,7 +62,7 @@ The backbone for obtaining the distortion coefficients and calibrate the camera 
 
 ![image1]
 
-First, use the findChessboardCorners on each image to find all the coordinates of the corners of the chess board. If the board contains a number of specified corners, all the points are appended to a image list so it can be used later. Once this proccess ends, is possible to use all the corner points and a predefined grid of well spaced points, to find the distortion of the image using the calibrateCamera.
+First, use the findChessboardCorners on each image to find all the coordinates of the corners of the chess board. If the board contains a number of specified corners, all the points are appended to a image list so it can be used later. Once this proccess ends, is possible to use all the corner points and a predefined grid of well spaced points, to find the distortion of the image using the calibrateCamera method.
 
 The calibrateCamera function is able to return the camera distortion cooefficients that can be used to undistord an image.
 
@@ -70,7 +70,7 @@ The calibrateCamera function is able to return the camera distortion cooefficien
 
 #### 1. Provide an example of a distortion-corrected image.
 
-The results after calibrating the camera is the next:
+The results after calibrating the camera are the next:
 
 ![image8]
 ![image9]
@@ -80,7 +80,8 @@ In the chess board is possible to check the difference between the original and 
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in ./Advanced-Lane-Finding-Project.ipynb) in the section "Image Process Pipeline".
+I used a combination of color and gradient thresholds to generate a binary image (thresholding steps 
+in the notebook ./Advanced-Lane-Finding-Project.ipynb) in the section "Image Process Pipeline".
 
 The idea was to apply a set of transformation to process the image that could help to identify more easily the lane lines.
 
@@ -93,32 +94,31 @@ The general steps were the next:
 
 Once the image pass through this pipeline is ready for the lane line detection
 
-
-## Color Spaces
+### Color Spaces
 
 Checking what color spaces can detect the lane lines best:
 
-- RGB: It's possible to use the RED channel, the lane line are visible
 ![image4]
-- HSV: It's possible to use the V channel, both lines looks good.
 ![image3]
-- HLS: It's possible to use the S channel here, both lines looks good.
 ![image2]
+
+In RGB it's possible to use the RED channel, the lane line are visible, in HSV: It's possible to use the V channel, both lines looks good and in HLS: it's possible to use the S channel here, both lines looks good.
+
+At the end i only use the V channel from HSV and the S channel from HLS.
 
 ## Sobel Gradient Absolute/Magnitude/Direction threshold
 
 ![image5]
 
-## Creation of Binary Image 
+### Creation of Binary Image 
 
 This was one of the most important parts of the project. I tried to create a pipeline that was good in normal and light conditions. For that i try different things but at the end i did the following:
 
-- An sobel absolute X transformation, using a very low min threshold, making this value low allows to capture more information, that is useful when is hard to detect the lane line because of ligth conditions.
-- A sobel direction transformation used to reinforce the values of the lane lines using a small threshold to capture important parts of the image.
-- Use the V channel of HSV to capture the lane lines, to reinforce the lane line in normal conditions (with ligther conditions it detects too much information)
+- A sobel absolute X transformation, using a very low min threshold, making this value low allows to capture more information, that is useful when is hard to detect the lane line because of ligth conditions. **ksize=21, threshold=(10,100)**
+- A sobel direction transformation used to reinforce the values of the lane lines using a small sized threshold to capture important parts of the image. **ksize=21, threshold=(1.27,1.3)**
+- Use the V channel of HSV to capture the lane lines, to reinforce the lane line in normal conditions (with ligther conditions it detects too much information) **threshold=(150,255)**
 
 The combination of the low threshold sobel absolute X transformation to detect hard ligth conditions, and use the sobel direction and V chanel to reinforce the lane line, make this pipeline works good in the three videos.
-
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -126,13 +126,12 @@ The code for the perspective transform can be seen in the notebook ./Advanced-La
 
 For a perspective transform is important to have two sets of points. The idea is to create a relation between thoose two sets of points to create a transformation from the "real image" to a "birde-eye view".
 
-This was achived seleting a trapezoid shape in the "real view" (source points) and defining a rectangle with kind of the same sizes (destination poinst).
+This was achived seleting a trapezoid shape in the "real view" (source points) and defining a rectangle with kind of the same sizes (destination points).
 
 ```python
 src = [ [341, 650], [1078, 650], [832, 520], [511, 520]]
 dst = [ [400, 650], [900, 650], [900, 500], [400, 500]]
 ```
-
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
 ![image6]
@@ -144,9 +143,10 @@ The code for this is on the notebook ./Advanced-Lane-Finding-Project.ipynb in th
 The algorithm for the lane line detection goes as follows:
 
 1. It detects the columns of the image that has more data to find the centroids where the left and right lane are.
-2. Using the pre-calculated centroids, now is time to use a small window to identify the real points on each line. The window moves through the image detecting all the points on each lane.
-3. Once all the points are detected is used and algorithm that can use those points to construct a mathematical function that fit all those points.
-4. Using that function now is time to draw on the image the detected points on each line and draw the polynomial function that fit those points.
+2. Using the pre-calculated centroids, now is time to use a sliding window to identify the real points on each line. The window moves through the image detecting all the points on each lane.
+3. Once all the points are detected is used and algorithm that can use those points to construct a mathematical function that fit the points.
+4. Using that function now is time to draw on the image the detected points on each line and draw the polynomial function that fit the points.
+5. Draw also a filled polygon with color green between the two lines.
 
 ![image13]
 
@@ -154,7 +154,54 @@ The algorithm for the lane line detection goes as follows:
 
 The code for this is on the notebook ./Advanced-Lane-Finding-Project.ipynb in the section "Radius of Curvature and Distance from Lane Center Calculation".
 
-To calculate the curvature and position of the vehicle was necesary to create a relation between pixels and metters
+To calculate the curvature and position of the vehicle was necesary to create a relation between pixels and metters:
+
+```python
+ym_per_pix = 3.048/100
+xm_per_pix = 3.7/378
+```
+### Calculate curvature
+
+First calculate the polynominal of each line but this time using the transformation scalars previously defined.
+
+```python
+left_fit_cr = np.polyfit(ploty*ym_per_pix, left_fitx*xm_per_pix, 2)
+right_fit_cr = np.polyfit(ploty*ym_per_pix, right_fitx*xm_per_pix, 2)
+```    
+Using a formula of the radious curvature.
+
+```python
+left_curverad = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+```
+
+### Calculate position of the car respect to the center
+
+This is done by creating again a fit function using the lane points and the scalars of the metters pixel transformaiton
+
+```python
+left_fit_cr = np.polyfit(ploty*ym_per_pix, left_fitx*xm_per_pix, 2)
+right_fit_cr = np.polyfit(ploty*ym_per_pix, right_fitx*xm_per_pix, 2)
+```    
+
+Then is time to use the half of the image as real vehicle center.
+
+```python
+vehicleCenter = xMax / 2
+```   
+
+Evaluate the fit function for each line and find the middle point between them.
+
+```python
+lineLeft = left_fit_m[0]*yMax**2 + left_fit_m[1]*yMax + left_fit_m[2]
+lineRight = right_fit_m[0]*yMax**2 + right_fit_m[1]*yMax + right_fit_m[2]
+lineMiddle = lineLeft + (lineRight - lineLeft)/2
+```   
+Finnaly, just substract the real value (fixed as the middle of the image) and the calculated car position.
+
+```python
+diffFromVehicle = lineMiddle - vehicleCenter
+```   
 
 ![image10]
 
