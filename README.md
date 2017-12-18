@@ -224,11 +224,11 @@ All the test images were correctly processed.
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Project Video ![video1] (.output_videos/project_video.mp4): The project video works good, the transition between frames is smooth and only has some problems and the end.
+**Project Video ![video1] (.output_videos/project_video.mp4):** The project video works good, the transition between frames is smooth and only has some problems and the end.
 
-Challenge Video ![video2] (.output_videos/challenge_video.mp4): The challenge video has some light difficulties (the white lanes where hard to detect, and there were some shadows). The result video in general behaves almost as good as the project video.
+**Challenge Video ![video2] (.output_videos/challenge_video.mp4):** The challenge video has some light difficulties (the white lanes where hard to detect, and there were some shadows). The result video in general behaves almost as good as the project video.
 
-Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4): The harder challenge video had harder light conditions and has lots of curves. The result video is not too bad, it manages to detect most of the curves and almost in all the video can detect correctly the lane lines.
+**Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4):** The harder challenge video had harder light conditions and has lots of curves. The result video is not too bad, it manages to detect most of the curves and almost in all the video can detect correctly the lane lines.
 
 ---
 
@@ -239,5 +239,6 @@ Harder Challenge Video ![video3] (.output_videos/harder_challenge_video.mp4): Th
 The project was long with lots of components and functions, but the most critic one was the generation of the binary image using the sobel and color space transformation. I had to play with different combinations of parameters to finally get one that could behave "good" in the three videos.</br>
 
 I probably could have tried to tune those parameters only for the project video and make it work perfectly, but I wanted to, process also the challenge and the harder challenge video. </br>
+
 In general, the behavior of the three videos is good, maybe is necessary to use different pipeline processing functions to different light conditions to make sure that the video is able to process well in all conditions. I tried to create a general purpose pipeline but maybe is not the best approach. 
  
