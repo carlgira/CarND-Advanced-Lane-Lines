@@ -2,7 +2,7 @@
    
 ---
 
--- RESUBMISSION COMMENTS AT THE END --
+**RESUBMISSION COMMENTS AT THE END**
 
 
 **Advanced Lane Finding Project**
@@ -248,7 +248,7 @@ In general, the behavior of the three videos is good, maybe is necessary to use 
  
  # RESUBMISSION NOTES   
  
-My first submission had some problems with the project video, but it can do a "decent" job detecting the lane lines in the other two videos. I did some changes to the pipeline to get better results in the project video (now is working very good) but after those changes the "challenge video" and the "harder challenge video" stop working. 
+My first submission had some problems with the project video, but it could do a "decent" job detecting the lane lines in the other two videos. I did some changes to the pipeline to get better results in the project video (now is working very good) but after those changes the "challenge video" and the "harder challenge video" stop working. 
 
 **Resubmission Video ![video4] (.output_videos/resubmission_project_video.mp4):** The lane lines are correctly detected in all the video, the changes between frames is smooth and the pipeline is able to accurately process the light changes.
 
