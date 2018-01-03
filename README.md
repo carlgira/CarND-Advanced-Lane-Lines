@@ -2,7 +2,7 @@
    
 ---
 
--- RESUBMISSION COMMENTS AT THE END --
+**RESUBMISSION COMMENTS AT THE END**
 
 
 **Advanced Lane Finding Project**
@@ -248,7 +248,7 @@ In general, the behavior of the three videos is good, maybe is necessary to use 
  
  # RESUBMISSION NOTES   
  
-My first submission had some problems with the project video, but it can do a "decent" job detecting the lane lines in the other two videos. I did some changes to the pipeline to get better results in the project video (now is working very good) but after those changes the "challenge video" and the "harder challenge video" stop working. 
+My first submission had some problems with the project video, but it could do a "decent" job detecting the lane lines in the other two videos. I did some changes to the pipeline to get better results in the project video (now is working very good) but after those changes the "challenge video" and the "harder challenge video" stop working. 
 
 **Resubmission Video ![video4] (.output_videos/resubmission_project_video.mp4):** The lane lines are correctly detected in all the video, the changes between frames is smooth and the pipeline is able to accurately process the light changes.
 
@@ -267,15 +267,17 @@ combined_binary[( ((sobel_binary == 1))  & ((l_channel_binary == 1) | (v_channel
 ### Questions from the review:
 
 * What are the limitations of your particular approach? Do you think your algorithm could robustly handle nighttime driving, rain, and so on?
+
 The model was specifically tuned for the project video, and is working poorly in the other two challenge videos that have different conditions. On rain or during night it would be the same or worst.
 I do not think that a single pipeline could work for all cases, probably is necessary several of them and depending on the conditions use one, or a combinations of all.
 
-*What are the potential failure modes? What causes them specifically and how could they be addressed?
+* What are the potential failure modes? What causes them specifically and how could they be addressed?
+
 The components used to construct the binary image are used to filter some kind of information so the lane lines can be detected. Different light conditions, obstacles in the road, the colors of the lane line or the curvature in the road, implies different parameters and pipelines for the image processing.
 
 There are lots of possible failures points given by all the possible conditions a car can deal in the road. I think that for a algorithm to detect lane lines (using the image processing tools on this project) it would be necessary to create several types of pipelines to process different kinds of situations (light conditions, rain, low visibility etc). Some-kind of fusion between all the results of those pipelines to get the final result.
 
-*What sort of improvements do you think are necessary before you'd feel safe riding in a car that was running your algorithm?
+* What sort of improvements do you think are necessary before you'd feel safe riding in a car that was running your algorithm?
 
 - Create several types of pipeline to detect different aspects and conditions of the road
 - Create some function that is able to evaluate and validate those pipelines. (give some kind of score to the result of each pipeline)
