@@ -300,10 +300,10 @@ After the second resubmission is clear that something was wrong. I had to re-che
 * Change the size of the window that calculate the histograms to get the initial points of the left and right line lanes
 * Add some other test images from the challenge and harder challenge video.
 * Change the image processing pipeline.
-** A two step processing pipeline. Process image in different conditions.
-** A validation function to detect if the detected lines were correct.
+   * A two step processing pipeline. Process image in different conditions.
+   * A validation function to score if the detected lines were correct.
 
-Given the change in the pipeline i was able to process the three videos again, the project video is working **really good** this time, the challenge video has some errors but is the pipeline is doing a excellent job there, the harder challenge video is working better than before but not much improvements. 
+Given the change in the pipeline i was able to process the three videos again, the project video is working **really good** this time, the challenge video has some errors but the pipeline is doing a excellent job there, the harder challenge video is working better than before but not much improvement. 
 
 **Check the notebook to see all the images and steps**
 
@@ -322,7 +322,7 @@ combined_binary[(((b_lab_channel_binary == 1) & ((s_hls_channel_binary == 1) | (
                  ((v_luv_channel_binary == 1) & ((s__hls_channel_binary == 1) | (v_hsv_channel_binary == 1)))) ] = 1
 ```
 
-2. Next i create a function to evaluate the previous pipeline to know if it was a good solution. The idea is simple subtract the the right lane points from the left lane points, the subtraction should be a line represented by the equation "y = a" been "a" a scalar with the value of the lanes separation. The test compares that the maximum value of this line is **not** bigger than two times the mean value.
+2. Next i create a function to evaluate the previous pipeline to know if it was a good solution. The idea is simple, subtract the the right lane points from the left lane points, the subtraction should be a line represented by the equation "y = a" been "a" a scalar with the value of the lines separation. The test compares that the maximum value of this line is **not** bigger than two times the mean value. (maybe 1.5 is enough)
 
 ```python
 def check_fit(left_fitx, right_fitx):
@@ -358,4 +358,4 @@ I made mistakes in my previous submissions that i think that finally correct in 
 
 This time i tried to create a more robust pipeline trying to create two different filters for the creation of the binary image, using the filter that behaves better using a validation function. In the previous submissions i knew this was the path to follow but was not sure how to accomplish that, the key was the validation function that measure the the "correctness" of the solutions (turns out was very simple in fact)
 
-This project was a good exercise for image processing in general but i cant stop thinking that this is not the way to do things, is not a good idea to create "manually" different filters for every kind of conditions that may or may not have the image, this is why neural network and more specially convolutional neural networks works very good for this kind of task.
+This project was a good exercise for image processing in general but i cant stop thinking that this is not the way to do things, is not a good idea to create "manually" different filters for every kind of conditions that may or may not have an image, this is why neural network and more specially convolutional neural networks works very good for this kind of task.
