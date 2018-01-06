@@ -358,4 +358,6 @@ I made mistakes in my previous submissions that i think that finally correct in 
 
 This time i tried to create a more robust pipeline trying to create two different filters for the creation of the binary image, using the filter that behaves better using a validation function. In the previous submissions i knew this was the path to follow but was not sure how to accomplish that, the key was the validation function that measure the the "correctness" of the solutions (turns out was very simple in fact)
 
+The curvature and distance of the center is working better after the correction of a bug. In the test images the ones that had some curvature have a value between 0.5 and 1.5 km (as expected), the ones with more straight lines have much higher values. The distance of the center value seems to be working well too.
+
 This project was a good exercise for image processing in general but i cant stop thinking that this is not the way to do things, is not a good idea to create "manually" different filters for every kind of conditions that may or may not have an image, this is why neural network and more specially convolutional neural networks works very good for this kind of task.
