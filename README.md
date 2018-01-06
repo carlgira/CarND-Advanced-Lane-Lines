@@ -2,7 +2,7 @@
    
 ---
 
-**RESUBMISSION COMMENTS AT THE END**
+**2ND RESUBMISSION COMMENTS AT THE END**
 
 
 **Advanced Lane Finding Project**
@@ -32,10 +32,17 @@ The goals / steps of this project are the following:
 [image10]: ./examples/curvature_img.png "Curvature"
 [image11]: ./examples/test_images.png "Test Images"
 [image13]: ./examples/lane_detection.png "Lane Detection"
+[image14]: ./examples/contrast_test1.png "Contrast test"
+[image15]: ./examples/contrast_test2.png "Contrast test"
 [video1]: ./output_videos/project_video.mp4 "Project Video"
 [video2]: ./output_videos/challenge_video.mp4 "Challenge Video"
 [video3]: ./output_videos/harder_challenge_video.mp4 "Harder Challenge Video"
 [video4]: ./output_videos/resubmission_project_video.mp4 "Resubmission Video"
+[video5]: ./output_videos/2nd_resubmission_project_video.mp4 "Project Video"
+[video6]: ./output_videos/2nd_resubmission_challenge_video.mp4 "Challenge Video"
+[video7]: ./output_videos/2nd_resubmission_harder_challenge_video.mp4 "Harder Challenge Video"
+
+
 
 Important Files in the project:
 
@@ -283,4 +290,67 @@ There are lots of possible failures points given by all the possible conditions 
 - Create some function that is able to evaluate and validate those pipelines. (give some kind of score to the result of each pipeline)
 - Create a "fusion" function that average all the valid solutions to create a final result.
 - Test the algorithm in lots of types of conditions to make sure that behaves well under different conditions.
+
+ # 2ND RESUBMISSION NOTES   
+
+After the second resubmission is clear that something was wrong. I had to re-check all the code again, i did the next modifications:
+
+- Test on more color spaces, YUV, LUV and YCrCb and contrast change.
+- I had a bug using a global variable that was causing problems with the curvature and distance from the center values.
+- Change the size of the window that calculate the histograms to get the initial points of the left and right line lanes
+- Add some other test images from the challenge and harder challenge video.
+- Change the image procesing pipeline.
+-- A two step procesing pipeline. Process image in different conditions.
+-- A validation function to detect if the detected lines were correct.
+
+Given the change in the pipeline i was able to process the three videos again, the project video is working **really good** this time, the challenge video has some errors but is the pipeline is doing a excelent job there, the harder challenge video is working better than before but not much improvements. 
+
+### Creation of Binary Image 
+
+I create a two step pipeline, the idea was to create two types of filters that would activate acording with image conditions.
+
+1. The first step works very well for the first video, were the ligth and contrast make that the yellow and white lanes were easy to detect. I create a mix between different color spaces (not using sobel) to detect by separate the yellow a white lines and and later just sum them up.
+
+- B from LAB for YELLOW
+- V from LUV for WHITE
+- V from HSV and S from HLS for BOTH colors
+
+```python
+combined_binary[(((b_lab_channel_binary == 1) & ((s_hls_channel_binary == 1) | (v_hsv_channel_binary == 1))) |  
+                 ((v_luv_channel_binary == 1) & ((s__hls_channel_binary == 1) | (v_hsv_channel_binary == 1)))) ] = 1
+```
+
+2. Next i create a function to evaluate the previous pipeline to know if it was a good solution. The idea is simple substract the the right lane points from the left lane points, the substraction should be a line represented by the ecuation "y = a" been "a" a scalar with the value of the lanes separation. The test compares that the maximum value of this line is **not** bigger than two times the mean value.
+
+```python
+def check_fit(left_fitx, right_fitx):
+    substract = right_fitx - left_fitx 
+    r = np.max(substract) > np.mean(substract)*2
+    return r
+```
+
+3. If the previous test did not pass the pipeline tries a second filter for construction of the binary image. The first that it does is to change the image contrast of specific channels of different color spaces. Then those channels are mixed to build the binary image.
+
+- V from LUV for WHITE
+- L from LUV, Y from YUV, R from RGB for BOTH colors
+
+```python
+        combined_binary2[(v2_luv_channel_binary == 1) | ((y2_yuv_channel_binary == 1) & (l2_luv_channel_binary == 1) & (r2_channel_binary == 1) )] = 1 
+```
+![image14]
+![image15]
+
+The change on contrast helps to detects easier the colors of the lines.
+
+### Videos
+
+**Project Video ![video5] (.output_videos/2nd_resubmission_project_video.mp4):** This time i think the video is working perfectly, there are not glitches or errors, the lines are really well detected, the curvature and the distance seems working well too.
+
+**Challenge Video ![video6] (.output_videos/2nd_resubmission_challenge_video.mp4):** The challenge video is working well, there are some errors but its very consistent. 
+
+**Harder Challenge Video ![video7] (.output_videos/2nd_resubmission_harder_challenge_video.mp4):** The harder challenge video is not doing very well, more work should be necesary.
+
+
+### Discussion
+
 
