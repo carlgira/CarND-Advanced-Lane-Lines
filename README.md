@@ -2,7 +2,7 @@
    
 ---
 
-**2ND RESUBMISSION COMMENTS AT THE END**
+**3RD RESUBMISSION COMMENTS AT THE END**
 
 
 **Advanced Lane Finding Project**
@@ -34,6 +34,8 @@ The goals / steps of this project are the following:
 [image13]: ./examples/lane_detection.png "Lane Detection"
 [image14]: ./examples/contrast_test1.png "Contrast test"
 [image15]: ./examples/contrast_test2.png "Contrast test"
+[image16]: ./examples/video_capture_undistort1.png "Undistor video"
+[image17]: ./examples/video_capture1.png "Original video"
 [video1]: ./output_videos/project_video.mp4 "Project Video"
 [video2]: ./output_videos/challenge_video.mp4 "Challenge Video"
 [video3]: ./output_videos/harder_challenge_video.mp4 "Harder Challenge Video"
@@ -41,6 +43,7 @@ The goals / steps of this project are the following:
 [video5]: ./output_videos/2nd_resubmission_project_video.mp4 "Project Video"
 [video6]: ./output_videos/2nd_resubmission_challenge_video.mp4 "Challenge Video"
 [video7]: ./output_videos/2nd_resubmission_harder_challenge_video.mp4 "Harder Challenge Video"
+[video8]: ./output_videos/3rd_resubmission_project_video.mp4 "Project Video"
 
 
 
@@ -361,3 +364,19 @@ This time i tried to create a more robust pipeline trying to create two differen
 The curvature and distance of the center is working better after the correction of a bug. In the test images the ones that had some curvature have a value between 0.5 and 1.5 km (as expected), the ones with more straight lines have much higher values. The distance of the center value seems to be working well too.
 
 This project was a good exercise for image processing in general but i cant stop thinking that this is not the way to do things, is not a good idea to create "manually" different filters for every kind of conditions that may or may not have an image, this is why neural network and more specially convolutional neural networks works very good for this kind of task.
+
+# 3RD RESUBMISSION NOTES   
+
+The final step of drawing the lane lines, was using the original image instead of the undistored image, all the other functions and calculations were OK.
+
+It's possible to see the difference between the videos of the last submission and the new one.
+
+### Original (2nd_resubmission_project_video.mp4)
+![image17]
+
+### Undistorted Image (3rd_resubmission_project_video.mp4)
+![image16]
+
+# Videos 
+
+**Project Video ![video8] (.output_videos/3rd_resubmission_project_video.mp4):** Video with the correction using the undistorted image.
