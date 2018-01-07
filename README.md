@@ -367,9 +367,9 @@ This project was a good exercise for image processing in general but i cant stop
 
 # 3RD RESUBMISSION NOTES   
 
-The final step of drawing the lane lines, was using the original image instead of the undistored image, all the other functions and calculations were OK.
+The final step of drawing the lane lines was using the original image instead of the undistored image, all the other functions and calculations were OK.
 
-It's possible to see the difference between the videos of the last submission and the new one.
+It's possible to see the difference between the videos of the last submission and the new one. (the white car position and the hood of the car)
 
 ### Original (2nd_resubmission_project_video.mp4)
 ![image17]
